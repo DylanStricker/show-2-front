@@ -11,6 +11,7 @@ import SignOut from './components/SignOut/SignOut'
 import ChangePassword from './components/ChangePassword/ChangePassword'
 // show components
 import IndexShows from './components/IndexShows/IndexShows'
+import GetShow from './components/GetShow/GetShow'
 
 class App extends Component {
   constructor (props) {
@@ -67,8 +68,11 @@ class App extends Component {
           <AuthenticatedRoute user={user} path='/change-password/' render={() => (
             <ChangePassword msgAlert={this.msgAlert} user={user} />
           )} />
-          <AuthenticatedRoute user={user} path='/shows/' render={() => (
+          <AuthenticatedRoute user={user} exact path='/shows/' render={() => (
             <IndexShows msgAlert={this.msgAlert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/shows/:id/' render={() => (
+            <GetShow msgAlert={this.msgAlert} user={user} />
           )} />
         </main>
       </Fragment>

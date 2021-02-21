@@ -16,22 +16,22 @@ const ShowForm = ({ handleSubmit, handleInputChange, show }) => (
     <input
       name="director"
       type="text"
-      placeholder="Author name here"
+      placeholder="Director name"
       value={show.director}
       onChange={handleInputChange}
     />
     <input
       name="rating"
       type="number"
-      placeholder="Show title here"
+      placeholder="Rating /10"
       value={show.rating}
       onChange={handleInputChange}
     />
     <textarea
       name="description"
       type="text"
-      rows={4 * vh}
-      cols={20 * vw}
+      rows={1 * vh}
+      cols={5 * vw}
       placeholder="Describe the show"
       value={show.description}
       onChange={handleInputChange}

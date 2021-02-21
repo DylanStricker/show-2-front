@@ -1,11 +1,12 @@
 // imports
 import React, { Component } from 'react'
-import { Link, withRouter } from 'react-router-dom'
-// import axios from 'axios'
-// import apiUrl from '../../apiConfig'
-import { indexShows } from '../../api/shows'
-// import shows from '../../data/tourData'
-// import UpdateShow from './../UpdateShow/UpdateShow'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import { Link, withRouter, Redirect } from 'react-router-dom'
+
+import { indexShows, createShow } from '../../api/shows'
+
 import ShowForm from '../../ShowForm/ShowForm'
 
 // class
@@ -15,7 +16,15 @@ class IndexShows extends Component {
     super(props)
 
     this.state = {
-      shows: null
+      shows: null,
+      newShow: {
+        title: '',
+        author: '',
+        rating: '',
+        description: '',
+        owner: ''
+      },
+      created: ''
     }
   }
 
@@ -23,18 +32,43 @@ class IndexShows extends Component {
     const { user } = this.props
     indexShows(user)
       .then(res => {
-        console.log(res)
         this.setState({ shows: res.data.shows })
       })
       .catch(console.error)
   }
+  handleInputChange = (event) => {
+    const updatedField = {
+      [event.target.name]: event.target.value
+    }
+    this.setState(() => {
+      const createdShow = Object.assign({}, this.state.newShow, updatedField)
 
+      // Object.assign copies key/value pairs from one or more objects to a target object
+      // Empty object is the 1st argument (modified in place)
+      // state is the 2nd argument
+      // updatedField is the 3rd argument (comes after the state so it oerrides the state values)
+      // const newBook = Object.assign({}, this.state.show, updatedField)
+
+      return { newShow: createdShow }
+    })
+  }
+  handleSubmit = (event) => {
+    event.preventDefault()
+    const { user } = this.props
+    const { newShow } = this.state
+    console.log(this.state.newShow)
+    createShow(user, newShow)
+      .then((res) => this.setState({ created: res.data.id }))
+      .catch(console.error)
+  }
   render () {
+    if (this.state.created) {
+      return <Redirect to={`/shows/${this.state.created}/`}/>
+    }
     let showsJsx
     let createJsx
     const { shows } = this.state
     if (!shows) {
-      console.log(shows)
       showsJsx = 'Loading...'
       createJsx = <p>Loading...</p>
     } else if (!shows.length) {
@@ -42,31 +76,31 @@ class IndexShows extends Component {
     } else {
       showsJsx = shows.map(show => (
         <li key={show.id}>
-          <Link to={`/shows/${show.id}`} show={show} >
+          <Link to={`/shows/${show.id}/`} show={show} >
             {show.title} - {show.director}  (ID: {show.id})
           </Link>
         </li>
       ))
-      createJsx = <div><ShowForm
+      createJsx = <ShowForm
         show={shows || null}
         handleSubmit={this.handleSubmit}
         handleInputChange={this.handleInputChange}
-      /></div>
+      />
     }
     return (
       <React.Fragment>
-        <div>
-          <div className="row" >
-            <div className="col">
+        <Container>
+          <Row>
+            <Col>
               <h1 style={{ textAlign: 'left' }}>Shows</h1>
               <h5 style={{ textAlign: 'left' }}>{showsJsx}</h5>
-            </div>
-            <div className="col">
+            </Col>
+            <Col>
               <h1 style={{ textAlign: 'right' }}>Create a Show</h1>
               {createJsx}
-            </div>
-          </div>
-        </div>
+            </Col>
+          </Row>
+        </Container>
       </React.Fragment>
     )
   }
