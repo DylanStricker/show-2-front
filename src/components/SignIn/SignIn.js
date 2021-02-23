@@ -54,6 +54,7 @@ class SignIn extends Component {
           <Form onSubmit={this.onSignIn}>
             <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
+              <p>Don&apos;t forget the @ or the .com!</p>
               <Form.Control
                 required
                 type="email"
@@ -65,6 +66,7 @@ class SignIn extends Component {
             </Form.Group>
             <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
+              <p>Password must be at least 5 characters</p>
               <Form.Control
                 required
                 name="password"
