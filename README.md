@@ -6,11 +6,12 @@ but also tracks the details of each show and personal thoughts on shows (could
 be thought of as reviews but are more free form --general opinions etc).
 
 ### Tech used #
-* HTML/CSS
-* Javascript
 * React
+* React Router
+* Python
+* Django
 * Bootstrap
-* AJAX
+* Axios
 
 ### API Documentation
 [Back-End-Link]https://github.com/DylanStricker/back-end-show-site

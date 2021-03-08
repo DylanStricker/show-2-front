@@ -56,7 +56,7 @@ class IndexShows extends Component {
     event.preventDefault()
     const { user } = this.props
     const { newShow } = this.state
-    console.log(this.state.newShow)
+    // console.log(this.state.newShow)
     createShow(user, newShow)
       .then((res) => this.setState({ created: res.data.id }))
       .catch(console.error)
@@ -66,11 +66,9 @@ class IndexShows extends Component {
       return <Redirect to={`/shows/${this.state.created}/`}/>
     }
     let showsJsx
-    let createJsx
-    const { shows } = this.state
+    const { shows, newShow } = this.state
     if (!shows) {
       showsJsx = 'Loading...'
-      createJsx = <p>Loading...</p>
     } else if (!shows.length) {
       showsJsx = 'We aint got a single show!!!'
     } else {
@@ -81,12 +79,12 @@ class IndexShows extends Component {
           </Link>
         </li>
       ))
-      createJsx = <ShowForm
-        show={shows || null}
-        handleSubmit={this.handleSubmit}
-        handleInputChange={this.handleInputChange}
-      />
     }
+    const createJsx = <ShowForm
+      show={shows || newShow}
+      handleSubmit={this.handleSubmit}
+      handleInputChange={this.handleInputChange}
+    />
     return (
       <React.Fragment>
         <Container>

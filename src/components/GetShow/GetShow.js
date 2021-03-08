@@ -41,7 +41,7 @@ class UpdateShow extends Component {
   //     updated: false,
   //     [event.target.name]: event.target.value
   //   })
-  //   console.log(event.target.name, event.target.value)
+  //   // console.log(event.target.name, event.target.value)
   // }
   handleInputChange = (event) => {
     const updatedField = {
@@ -75,7 +75,7 @@ class UpdateShow extends Component {
   handleSubmit = async (event) => {
     event.preventDefault()
     const { user, msgAlert } = this.props
-    console.log(this.state.show)
+    // // console.log(this.state.show)
     try {
       await updateShow(user, this.state.show, this.props.match.params.id)
         .then(() => this.setState({ updated: true, show: this.state.showObject }))

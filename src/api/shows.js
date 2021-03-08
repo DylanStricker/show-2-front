@@ -10,7 +10,7 @@ export const showShow = (user, id) => {
 }
 
 export const createShow = (user, show) => {
-  console.log(show)
+  // console.log(show)
   return axios({
     method: 'POST',
     url: apiUrl + 'shows/',
@@ -28,7 +28,7 @@ export const createShow = (user, show) => {
 }
 
 export const updateShow = (user, show, id) => {
-  console.log(show)
+  // console.log(show)
   return axios({
     method: 'PATCH',
     url: `${apiUrl}shows/${id}/`,
